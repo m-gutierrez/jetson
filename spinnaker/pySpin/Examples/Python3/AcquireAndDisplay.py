@@ -96,6 +96,16 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
             print('Unable to set acquisition mode to continuous (entry retrieval). Aborting...')
             return False
 
+        node_width = PySpin.CIntegerPtr(nodemap.GetNode('Width'))
+        node_width.SetValue(500)
+
+        node_height = PySpin.CIntegerPtr(nodemap.GetNode('Height'))
+        node_height.SetValue(500)
+        # Retrieve the integer value from the entry node
+        pixel_format_mono8 = node_pixel_format_mono8.GetValue()
+
+        # Set integer as new value for enumeration node
+        node_pixel_format.SetIntValue(pixel_format_mono8)
         # Retrieve integer value from entry node
         acquisition_mode_continuous = node_acquisition_mode_continuous.GetValue()
 
@@ -138,6 +148,7 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
 
         # Close the GUI when close event happens
         #fig.canvas.mpl_connect('close_event', handle_close)
+        time.sleep(10)
         ts = []
         ts.append(time.time())
         # Retrieve and display images
