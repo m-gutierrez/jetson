@@ -133,10 +133,10 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
         print('Press enter to close the program..')
 
         # Figure(1) is default so you can omit this line. Figure(0) will create a new window every time program hits this line
-        fig = plt.figure(1)
+        #fig = plt.figure(1)
 
         # Close the GUI when close event happens
-        fig.canvas.mpl_connect('close_event', handle_close)
+        #fig.canvas.mpl_connect('close_event', handle_close)
 
         # Retrieve and display images
         while(continue_recording):
@@ -154,6 +154,8 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
                 #  buffer from filling up.
                 
                 image_result = cam.GetNextImage()
+                ts = []
+                t0 = time.time()
 
                 #  Ensure image completion
                 if image_result.IsIncomplete():
@@ -163,16 +165,18 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
 
                     # Getting the image data as a numpy array
                     image_data = image_result.GetNDArray()
-
+                    ts.append(time.time())
                     # Draws an image on the current figure
-                    plt.imshow(image_data, cmap='gray')
+                    #plt.imshow(image_data, cmap='gray')
+                    print('time: ',ts[-1] - ts[-2])
 
+                    print(np.mean(image_data), np.std(image_data), np.max(image_data), np.min(image_data))
                     # Interval in plt.pause(interval) determines how fast the images are displayed in a GUI
                     # Interval is in seconds.
-                    plt.pause(0.001)
+                    #plt.pause(0.001)
 
                     # Clear current reference of a figure. This will improve display speed significantly
-                    plt.clf()
+                    #plt.clf()
                     
                     # If user presses enter, close the program
                     if keyboard.is_pressed('ENTER'):
