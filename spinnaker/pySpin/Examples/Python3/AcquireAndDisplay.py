@@ -137,7 +137,8 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
 
         # Close the GUI when close event happens
         #fig.canvas.mpl_connect('close_event', handle_close)
-
+        ts = []
+        ts.append(time.time())
         # Retrieve and display images
         while(continue_recording):
             try:
@@ -154,8 +155,7 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
                 #  buffer from filling up.
                 
                 image_result = cam.GetNextImage()
-                ts = []
-                t0 = time.time()
+
 
                 #  Ensure image completion
                 if image_result.IsIncomplete():
@@ -183,9 +183,11 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
                         print('Program is closing...')
                         
                         # Close figure
-                        plt.close('all')             
                         input('Done! Press Enter to exit...')
-                        continue_recording=False                        
+                        continue_recording=False
+                    elif time.time()-ts[0] > 30:
+                        print('exiting...')
+                        continue_recording = False                  
 
                 #  Release image
                 #
