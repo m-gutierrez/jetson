@@ -29,6 +29,7 @@ import matplotlib.pyplot as plt
 import sys
 import keyboard
 import time
+import numpy as np
 
 global continue_recording
 continue_recording = True
