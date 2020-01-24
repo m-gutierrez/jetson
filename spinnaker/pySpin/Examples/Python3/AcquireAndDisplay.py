@@ -101,15 +101,13 @@ def acquire_and_display_images(cam, nodemap, nodemap_tldevice):
 
         node_height = PySpin.CIntegerPtr(nodemap.GetNode('Height'))
         node_height.SetValue(500)
-        # Retrieve the integer value from the entry node
-        pixel_format_mono8 = node_pixel_format_mono8.GetValue()
 
-        # Set integer as new value for enumeration node
+        node_pixel_format = PySpin.CEnumerationPtr(nodemap.GetNode('PixelFormat'))
+        pixel_format_mono8 = node_pixel_format_mono8.GetValue()
         node_pixel_format.SetIntValue(pixel_format_mono8)
+
         # Retrieve integer value from entry node
         acquisition_mode_continuous = node_acquisition_mode_continuous.GetValue()
-
-        # Set integer value from entry node as new value of enumeration node
         node_acquisition_mode.SetIntValue(acquisition_mode_continuous)
 
         print('Acquisition mode set to continuous...')
